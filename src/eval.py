@@ -106,9 +106,12 @@ def run_evaluation(dataset_path: str, model: str, output_path: str, delay: float
         }
 
         # Flag prepotent errors for Executive Functions items
-        if item.get("prepotent_response") and not hit:
+        # predicted is a letter (A/B/C/D); resolve it to the actual choice value
+        # then compare against the stored prepotent_response string
+        if item.get("prepotent_response") and not hit and predicted is not None:
+            predicted_value = item["choices"][ord(predicted) - 65]
             result["prepotent_error"] = (
-                predicted == item["prepotent_response"].upper()
+                predicted_value.upper() == item["prepotent_response"].upper()
             )
 
         results.append(result)
