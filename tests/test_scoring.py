@@ -31,6 +31,24 @@ def test_extract_choice_no_valid():
 def test_extract_choice_invalid_letter():
     assert extract_choice("E", ["A", "B", "C", "D"]) is None
 
+def test_extract_choice_verbose_because():
+    assert extract_choice(
+        "The answer is B because the passage clearly states the count is 5.",
+        ["A", "B", "C", "D"]
+    ) == "B"
+
+def test_extract_choice_verbose_choose():
+    assert extract_choice("I would choose C as the correct answer.", ["A", "B", "C", "D"]) == "C"
+
+def test_extract_choice_end_of_string():
+    assert extract_choice("After careful reading, I select D", ["A", "B", "C", "D"]) == "D"
+
+def test_extract_choice_with_explanation_first():
+    assert extract_choice(
+        "Looking at the options carefully: A is wrong, B is wrong, C is correct.",
+        ["A", "B", "C", "D"]
+    ) == "C"
+
 
 # --- accuracy_with_ci tests ---
 
